@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tabhost">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/day"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Statistics (Day)"
+                        android:textAlignment="center"
+                        android:textColor="@color/ap_black"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Steps Counted:"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="..."
+                            android:textAlignment="center"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <com.androidplot.xy.XYPlot
+                        android:id="@+id/plotAccelDataDay"
+                        style="@style/APDefacto.Dark"
+                        androidPlot.backgroundPaint.color="#FFFFFF"
+                        androidPlot.borderPaint.color="#FFFFFF"
+                        androidPlot.domainLabel="Domain"
+                        androidPlot.domainLabelWidget.labelPaint.textSize="@dimen/domain_label_font_size"
+                        androidPlot.graphWidget.backgroundPaint.color="#FFFFFF"
+                        androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_label_font_size"
+                        androidPlot.graphWidget.gridBackgroundPaint.color="#fafafa"
+                        androidPlot.graphWidget.marginBottom="14dp"
+                        androidPlot.graphWidget.marginLeft="10dp"
+                        androidPlot.graphWidget.marginRight="0dp"
+                        androidPlot.graphWidget.marginTop="12dp"
+                        androidPlot.graphWidget.rangeOriginLabelPaint.textSize="@dimen/range_tick_label_font_size"
+                        androidPlot.rangeLabel="Range"
+                        androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_label_font_size"
+                        androidPlot.title="Motion Data Plot"
+                        androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
+                        androidplot.renderMode="use_background_thread"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="225dp"
+                        app:domainLabel="domain"
+                        app:label="Motion Data"
+                        app:rangeLabel="range" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/week"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Statistics (Week)"
+                        android:textAlignment="center"
+                        android:textColor="@color/ap_black"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Steps Counted:"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="..."
+                            android:textAlignment="center"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <com.androidplot.xy.XYPlot
+                        android:id="@+id/XYPlot2"
+                        style="@style/APDefacto.Dark"
+                        androidPlot.backgroundPaint.color="#FFFFFF"
+                        androidPlot.borderPaint.color="#FFFFFF"
+                        androidPlot.domainLabel="Domain"
+                        androidPlot.domainLabelWidget.labelPaint.textSize="@dimen/domain_label_font_size"
+                        androidPlot.graphWidget.backgroundPaint.color="#FFFFFF"
+                        androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_label_font_size"
+                        androidPlot.graphWidget.gridBackgroundPaint.color="#fafafa"
+                        androidPlot.graphWidget.marginBottom="14dp"
+                        androidPlot.graphWidget.marginLeft="10dp"
+                        androidPlot.graphWidget.marginRight="0dp"
+                        androidPlot.graphWidget.marginTop="12dp"
+                        androidPlot.graphWidget.rangeOriginLabelPaint.textSize="@dimen/range_tick_label_font_size"
+                        androidPlot.rangeLabel="Range"
+                        androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_label_font_size"
+                        androidPlot.title="Motion Data Plot"
+                        androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
+                        androidplot.renderMode="use_background_thread"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="225dp"
+                        app:domainLabel="domain"
+                        app:label="Motion Data"
+                        app:rangeLabel="range" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/month"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Statistics (Month)"
+                        android:textAlignment="center"
+                        android:textColor="@color/ap_black"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Steps Counted:"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="..."
+                            android:textAlignment="center"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <com.androidplot.xy.XYPlot
+                        android:id="@+id/XYPlot3"
+                        style="@style/APDefacto.Dark"
+                        androidPlot.backgroundPaint.color="#FFFFFF"
+                        androidPlot.borderPaint.color="#FFFFFF"
+                        androidPlot.domainLabel="Domain"
+                        androidPlot.domainLabelWidget.labelPaint.textSize="@dimen/domain_label_font_size"
+                        androidPlot.graphWidget.backgroundPaint.color="#FFFFFF"
+                        androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_label_font_size"
+                        androidPlot.graphWidget.gridBackgroundPaint.color="#fafafa"
+                        androidPlot.graphWidget.marginBottom="14dp"
+                        androidPlot.graphWidget.marginLeft="10dp"
+                        androidPlot.graphWidget.marginRight="0dp"
+                        androidPlot.graphWidget.marginTop="12dp"
+                        androidPlot.graphWidget.rangeOriginLabelPaint.textSize="@dimen/range_tick_label_font_size"
+                        androidPlot.rangeLabel="Range"
+                        androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_label_font_size"
+                        androidPlot.title="Motion Data Plot"
+                        androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
+                        androidplot.renderMode="use_background_thread"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="225dp"
+                        app:domainLabel="domain"
+                        app:label="Motion Data"
+                        app:rangeLabel="range" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+</LinearLayout>

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">FitnessApp</string>
+    <string name="device_control_name">View Data</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="current_activity">Current Activity</string>
+    <string name="running">Running</string>
+    <string name="walking">Walking</string>
+    <string name="still">Standing</string>
+    <string name="tilting">Tilting</string>
+    <string name="unknown">Unknown activity</string>
+    <string name="unidentifiable_activity">Unidentifiable activity: %1$d</string>
+    <string name="enable_sensor">Enable Tracking</string>
+    <string name="disable_sensor">Disable Tracking</string>
+    <string name="tracking_disabled">Tracking Disabled</string>
+    <string name="tracking_enabled">Tracking Enabled</string>
+</resources>
