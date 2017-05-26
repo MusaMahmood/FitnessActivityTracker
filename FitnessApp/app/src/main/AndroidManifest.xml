@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="vcucmsc355.fitnessapp">
+    package="musamahmood.fitnessapp">
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
@@ -20,7 +20,7 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
         <activity
-            android:name=".MainActivity"
+            android:name="musamahmood.fitnessapp.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +28,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DataControlActivity" android:label="@string/device_control_name">
+        <activity android:name="musamahmood.fitnessapp.DataControlActivity" android:label="@string/device_control_name">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="musamahmood.fitnessapp.MainActivity" />
         </activity>
         <service
             android:name=".ActivityRecognizedService"

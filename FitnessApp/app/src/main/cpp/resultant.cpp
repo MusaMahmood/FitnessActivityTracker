@@ -17,7 +17,7 @@ extern "C" {
 JNIEXPORT jdouble JNICALL
 //Call this function with (data, data, data, data, datalen, Fs);
 //Don't need array size; can check size array in C.
-Java_vcucmsc355_fitnessapp_MainActivity_jniMean(JNIEnv *env, jobject jobject1, jdoubleArray data, jint len) {
+Java_musamahmood_fitnessapp_MainActivity_jniMean(JNIEnv *env, jobject jobject1, jdoubleArray data, jint len) {
     jdouble  *dataArray;
     dataArray = env->GetDoubleArrayElements(data, NULL);
     if(dataArray==NULL) LOGE("Error!");
@@ -30,7 +30,7 @@ extern "C" {
 JNIEXPORT jdouble JNICALL
 //Call this function with (data, data, data, data, datalen, Fs);
 //Don't need array size; can check size array in C.
-Java_vcucmsc355_fitnessapp_MainActivity_jniResultantAcc(JNIEnv *env, jobject jobject1, jdoubleArray data) {
+Java_musamahmood_fitnessapp_MainActivity_jniResultantAcc(JNIEnv *env, jobject jobject1, jdoubleArray data) {
     jdouble  *dataArray;
     dataArray = env->GetDoubleArrayElements(data, NULL);
     if(dataArray==NULL) LOGE("Error!");
@@ -43,7 +43,7 @@ extern "C" {
 JNIEXPORT jdouble JNICALL
 //Call this function with (data, data, data, data, datalen, Fs);
 //Don't need array size; can check size array in C.
-Java_vcucmsc355_fitnessapp_MainActivity_jniResultantGyro(JNIEnv *env, jobject jobject1, jdoubleArray data) {
+Java_musamahmood_fitnessapp_MainActivity_jniResultantGyro(JNIEnv *env, jobject jobject1, jdoubleArray data) {
     jdouble  *dataArray;
     dataArray = env->GetDoubleArrayElements(data, NULL);
     double result = resultantGyro(dataArray);

@@ -1,4 +1,4 @@
-package vcucmsc355.fitnessapp;
+package musamahmood.fitnessapp;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -20,32 +20,34 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-
 /**
- * Name of test: MainActivityTest_imageview.java
- * Description: This test checks that the image is displayed when an activity is recognized.
+ * Name of test: MainActivityTest_StepCounter
+ * Description: This test checks that the UI element for steps taken is present, indicating
+ * that the step counter is enabled.
  * Result: Pass
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest_imageview {
+public class MainActivityTest_StepCounter {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest_imageview() {
-        ViewInteraction imageView = onView(
-                allOf(withId(R.id.imageView1),
+    public void mainActivityTest_StepCounter() {
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.stepCounterText), withText("Steps Taken:"),
                         childAtPosition(
-                                allOf(withId(R.id.content),
+                                allOf(withId(R.id.container),
                                         childAtPosition(
-                                                withId(R.id.container),
+                                                withId(android.R.id.content),
                                                 0)),
-                                2),
+                                3),
                         isDisplayed()));
-        imageView.check(matches(isDisplayed()));
+
+        textView.check(matches(withText("Steps Taken:")));
 
     }
 

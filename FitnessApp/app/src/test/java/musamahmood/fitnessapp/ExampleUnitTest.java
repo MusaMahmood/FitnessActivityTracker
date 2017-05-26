@@ -1,8 +1,6 @@
-package vcucmsc355.fitnessapp;
+package musamahmood.fitnessapp;
 
 import org.junit.Test;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 

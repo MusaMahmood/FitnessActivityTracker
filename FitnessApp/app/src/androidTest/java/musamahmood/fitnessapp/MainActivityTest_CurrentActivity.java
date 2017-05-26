@@ -1,4 +1,4 @@
-package vcucmsc355.fitnessapp;
+package musamahmood.fitnessapp;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -12,48 +12,42 @@ import android.view.ViewParent;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-
+import static org.hamcrest.Matchers.startsWith;
 /**
- * Name of test: MainActivityTest_UserStatisticsButton
- * Description: This test checks that the button that takes the user to their statistics and data
- * page works.
+ * Name of test: MainActivityTest_CurrentActivity
+ * Description: This test checks that the TextView containing "Current Activity" is present while
+ * the app is classifying user activity.
  * Result: Pass
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest_UserStatisticsButton {
+public class MainActivityTest_CurrentActivity {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest_UserStatisticsButton() {
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.statisticsButton), withText("User Statistics"), isDisplayed()));
-        appCompatButton.perform(click());
-
-        ViewInteraction linearLayout = onView(
-                allOf(withId(R.id.day),
+    public void mainActivityTest_CurrentActivity() {
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.ActivityDetected_textview), withText((startsWith("Current Activity"))),
                         childAtPosition(
-                                allOf(withId(android.R.id.tabcontent),
+                                allOf(withId(R.id.content),
                                         childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
-                                                1)),
-                                0),
+                                                withId(R.id.container),
+                                                0)),
+                                1),
                         isDisplayed()));
-        linearLayout.check(matches(isDisplayed()));
+        textView2.check(matches(withText((startsWith("Current Activity")))));
 
     }
 

@@ -1,4 +1,4 @@
-package vcucmsc355.fitnessapp;
+package musamahmood.fitnessapp;
 
 import android.app.Activity;
 import android.content.Context;

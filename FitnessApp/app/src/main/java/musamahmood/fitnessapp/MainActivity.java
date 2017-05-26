@@ -1,5 +1,7 @@
-package vcucmsc355.fitnessapp;
+package musamahmood.fitnessapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -7,27 +9,33 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.content.Intent;
-import android.app.PendingIntent;
-import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.support.v4.content.LocalBroadcastManager;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import com.androidplot.Plot;
+import com.androidplot.util.Redrawer;
+import com.androidplot.xy.BoundaryMode;
+import com.androidplot.xy.LineAndPointFormatter;
+import com.androidplot.xy.SimpleXYSeries;
+import com.androidplot.xy.XYPlot;
+import com.androidplot.xy.XYStepMode;
+import com.opencsv.CSVWriter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -39,31 +47,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.Toast;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-
 // Android Plot
-import com.androidplot.Plot;
-import com.androidplot.util.Redrawer;
-import com.androidplot.xy.BoundaryMode;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYPlot;
-import com.androidplot.xy.XYStepMode;
 // Google Activity Recognition
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.ActivityRecognition;
-import com.google.android.gms.location.DetectedActivity;
-import com.opencsv.CSVWriter;
 // Google MediaPlayer Service
-import android.media.MediaPlayer;
-import android.widget.ToggleButton;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     //Initialize native library for C++ integration:
     static {
@@ -76,23 +64,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     //Debug Tag
     private final static String TAG = MainActivity.class.getSimpleName();
 
-    private static final String MainActivity = "MainActivity";
-    private static final String AD = "ActivityRecognize";
-    private ADBroadcastReceiver ADBroadcastReceiver;
-    public GoogleApiClient mGoogleApiClient;
     private TextView ActivityDetected_textview;
     private TextView mTextMessage;
     private ImageView image;
     public static final String PACKAGE_NAME = "vcucmsc355.fitnessapp;";
-    public static final String STRING_ACTION = PACKAGE_NAME + ".STRING_ACTION";
-    public static final String STRING_EXTRA = PACKAGE_NAME + ".STRING_EXTRA";
 
     // Sensor Variables for Raw Data Acquisition
     private SensorManager mSensorManager = null;
     private Sensor mAccelerometerSensor = null;
     private Sensor mGyroscopeSensor = null;
-    private Sensor mStepCountSensor = null;
-    private Sensor mStepDetectorSensor = null;
     private double[] mMotionSensorDataBuffer = new double[6];
 
     private double[] mAccXData = new double[50];
@@ -167,14 +147,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 		
         image = (ImageView) this.findViewById(R.id.imageView1) ;
         ActivityDetected_textview = (TextView) findViewById(R.id.ActivityDetected_textview);
-        /*ADBroadcastReceiver = new ADBroadcastReceiver();
-        // GoogleAPIClient
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-        .addApi(ActivityRecognition.API)
-        .addConnectionCallbacks(this)
-        .addOnConnectionFailedListener(this)
-        .build();
-        mGoogleApiClient.connect();*/
             // Bottom Navigation
         int permissionCheck = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if(permissionCheck!= PackageManager.PERMISSION_GRANTED) {
@@ -398,28 +370,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Log.i(MainActivity, "Connected");
-        if (mGoogleApiClient.isConnected()) {
-            Toast.makeText(this, "GoogleApiClient is connected", Toast.LENGTH_SHORT).show();
-        }
-        Intent intent = new Intent( this, ActivityRecognizedService.class );
-        PendingIntent pendingIntent = PendingIntent.getService( this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
-        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates( mGoogleApiClient, 500, pendingIntent );
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i(MainActivity, "Connection Suspended");
-//        mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.i(MainActivity, "Connection failed. Error: " + connectionResult.getErrorCode());
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
 //        mGoogleApiClient.connect();
@@ -440,7 +390,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         double[] Y = jniActivityTrackerInit();
         Log.d(TAG,"Initialize JNI Tracker Result: ["+Arrays.toString(Y)+"]");
         super.onResume();
-        LocalBroadcastManager.getInstance(this).registerReceiver(ADBroadcastReceiver, new IntentFilter(STRING_ACTION));
         if(!mDataAcquisitionEnabled)
             enableSensorTracking();
         mRedrawer.start();
@@ -466,80 +415,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             disableSensorTracking();
         mRedrawer.finish();
         super.onDestroy();
-    }
-
-    // TextView will update Whenever an activity is recognized.
-    public String getAD(int detectedActivityType) {
-        Resources resources = this.getResources();
-        switch(detectedActivityType) {
-            case DetectedActivity.WALKING:
-                return resources.getString(R.string.walking);
-            case DetectedActivity.RUNNING:
-                return resources.getString(R.string.running);
-            case DetectedActivity.STILL:
-                return resources.getString(R.string.still);
-            case DetectedActivity.TILTING:
-                return resources.getString(R.string.tilting);
-            case DetectedActivity.UNKNOWN:
-                return resources.getString(R.string.unknown);
-            default:
-                return resources.getString(R.string.unidentifiable_activity, detectedActivityType);
-        }
-    }
-
-    // BroadcastReceiver for Activity Detection
-    public class ADBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ArrayList<DetectedActivity> detectedActivities = intent.getParcelableArrayListExtra(STRING_EXTRA);
-            String activityString = "";
-            for (DetectedActivity activity : detectedActivities) {
-                activityString += "Current Activity: " + getAD(activity.getType()) + " " + activity.getConfidence() + "%\n";
-                // Image will update Whenever an activity is recognized.
-                switch (activity.getType()) {
-                    case DetectedActivity.WALKING: {
-                        Log.e(AD, "Walking: " + activity.getConfidence());
-                            image.setImageResource(R.drawable.walking_104);
-                            happiness.start();
-                            ringtone.pause();
-                    }
-                    break;
-                    case DetectedActivity.RUNNING: {
-                        Log.e(AD, "Running: " + activity.getConfidence());
-                            image.setImageResource(R.drawable.running_104);
-                            ringtone.start();
-                            happiness.pause();
-                    }
-                    break;
-                    case DetectedActivity.STILL: {
-                        Log.e(AD, "Standing: " + activity.getConfidence());
-                        if (activity.getConfidence() >= 75) {
-                            image.setImageResource(R.drawable.standing_100);
-                            if(happiness.isPlaying() || ringtone.isPlaying()) {
-                                happiness.pause();
-                                ringtone.pause();
-                            }
-                        }
-                    }
-                    break;
-                    case DetectedActivity.TILTING: {
-                        Log.e(AD, "Tilting: " + activity.getConfidence());
-                        if (activity.getConfidence() >= 75) {
-                          //  player.pause();
-                        }
-                        break;
-                    }
-                    case DetectedActivity.UNKNOWN: {
-                        Log.e(AD, "Unknown: " + activity.getConfidence());
-                        if (activity.getConfidence() >= 75) {
-                            image.setImageResource(R.drawable.question_104);
-                        }
-                        break;
-                    }
-                }
-            }
-            ActivityDetected_textview.setText(activityString);
-        }
     }
 
     /**
@@ -575,19 +450,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
             mGyroResSeries.addLast(null,gyroRes);
             getDataRate();
-        } /*else if (sensorEvent.sensor == mStepCountSensor) {
-            int stepsCounted;
-            if(sensorEvent.values.length>0) {
-                stepsCounted = (int) sensorEvent.values[0];
-                mStepCounterText.setText("Steps Counter Sensor: "+String.valueOf(stepsCounted));
-            }
-        } else if (sensorEvent.sensor == mStepDetectorSensor) {
-            int stepsCounted;
-            if(sensorEvent.values.length>0) {
-                stepsCounted = (int) sensorEvent.values[0];
-                mStepCounterText.setText("Steps Detected Sensor: "+String.valueOf(stepsCounted));
-            }
-        }*/
+        }
         //Once we receive both Acc/Gyro Data
         if(mAccDataPresent && mGyroDataPresent) {
             mAccDataPresent = false;

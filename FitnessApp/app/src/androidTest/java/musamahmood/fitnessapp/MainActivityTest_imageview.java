@@ -1,4 +1,4 @@
-package vcucmsc355.fitnessapp;
+package musamahmood.fitnessapp;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -20,34 +20,22 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+
 /**
- * Name of test: MainActivityTest_StandingActivity
- * Description: This test checks that the correct view is displayed when
+ * Name of test: MainActivityTest_imageview.java
+ * Description: This test checks that the image is displayed when an activity is recognized.
  * Result: Pass
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest_StandingActivity {
+public class MainActivityTest_imageview {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest_StandingActivity() {
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.ActivityDetected_textview),
-                        childAtPosition(
-                                allOf(withId(R.id.content),
-                                        childAtPosition(
-                                                withId(R.id.container),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        textView.check(matches(isDisplayed()));
-
+    public void mainActivityTest_imageview() {
         ViewInteraction imageView = onView(
                 allOf(withId(R.id.imageView1),
                         childAtPosition(
@@ -58,7 +46,6 @@ public class MainActivityTest_StandingActivity {
                                 2),
                         isDisplayed()));
         imageView.check(matches(isDisplayed()));
-
 
     }
 

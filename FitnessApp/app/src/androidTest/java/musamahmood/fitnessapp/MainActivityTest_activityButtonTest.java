@@ -1,4 +1,4 @@
-package vcucmsc355.fitnessapp;
+package musamahmood.fitnessapp;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -17,38 +17,56 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.startsWith;
 /**
- * Name of test: MainActivityTest_CurrentActivity
- * Description: This test checks that the TextView containing "Current Activity" is present while
- * the app is classifying user activity.
+ * Name of test: MainActivityTest_activityButtonTest
+ * Description: This test checks for button functionality for enabling and disabling activity
+ * tracking.
  * Result: Pass
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest_CurrentActivity {
+public class MainActivityTest_activityButtonTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest_CurrentActivity() {
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.ActivityDetected_textview), withText((startsWith("Current Activity"))),
+    public void mainActivityTest_activityButtonTest() {
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.trackActivityButton), withText("Disable Tracking"), isDisplayed()));
+        appCompatButton.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.ActivityTrackingStatus), withText("Tracking Disabled"),
                         childAtPosition(
-                                allOf(withId(R.id.content),
+                                allOf(withId(R.id.container),
                                         childAtPosition(
-                                                withId(R.id.container),
+                                                withId(android.R.id.content),
                                                 0)),
                                 1),
                         isDisplayed()));
-        textView2.check(matches(withText((startsWith("Current Activity")))));
+        textView.check(matches(withText("Tracking Disabled")));
+
+        ViewInteraction appCompatButton2 = onView(
+                allOf(withId(R.id.trackActivityButton), withText("Enable Tracking"), isDisplayed()));
+        appCompatButton2.perform(click());
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.ActivityTrackingStatus), withText("Tracking Enabled"),
+                        childAtPosition(
+                                allOf(withId(R.id.container),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                1),
+                        isDisplayed()));
+        textView2.check(matches(withText("Tracking Enabled")));
 
     }
 

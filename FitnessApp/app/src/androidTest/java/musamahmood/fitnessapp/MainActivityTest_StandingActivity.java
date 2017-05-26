@@ -1,4 +1,4 @@
-package vcucmsc355.fitnessapp;
+package musamahmood.fitnessapp;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -17,55 +17,48 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 /**
- * Name of test: MainActivityTest_backgroundActivityTracking
- * Description: This test checks that the MainActivity still tracks activity even if the user has
- * moved to a different activity or backed out of the application.
+ * Name of test: MainActivityTest_StandingActivity
+ * Description: This test checks that the correct view is displayed when
  * Result: Pass
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest_backgroundActivityTracking {
+public class MainActivityTest_StandingActivity {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest_backgroundActivityTracking() {
+    public void mainActivityTest_StandingActivity() {
+
         ViewInteraction textView = onView(
-                allOf(withId(R.id.ActivityTrackingStatus), withText("Tracking Enabled"),
+                allOf(withId(R.id.ActivityDetected_textview),
                         childAtPosition(
-                                allOf(withId(R.id.container),
+                                allOf(withId(R.id.content),
                                         childAtPosition(
-                                                withId(android.R.id.content),
+                                                withId(R.id.container),
                                                 0)),
                                 1),
                         isDisplayed()));
-        textView.check(matches(withText("Tracking Enabled")));
+        textView.check(matches(isDisplayed()));
 
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.statisticsButton), withText("User Statistics"), isDisplayed()));
-        appCompatButton.perform(click());
-
-        pressBack();
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.ActivityTrackingStatus), withText("Tracking Enabled"),
+        ViewInteraction imageView = onView(
+                allOf(withId(R.id.imageView1),
                         childAtPosition(
-                                allOf(withId(R.id.container),
+                                allOf(withId(R.id.content),
                                         childAtPosition(
-                                                withId(android.R.id.content),
+                                                withId(R.id.container),
                                                 0)),
-                                1),
+                                2),
                         isDisplayed()));
-        textView2.check(matches(withText("Tracking Enabled")));
+        imageView.check(matches(isDisplayed()));
+
 
     }
 

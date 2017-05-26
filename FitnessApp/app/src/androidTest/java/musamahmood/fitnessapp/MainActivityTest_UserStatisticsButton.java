@@ -1,4 +1,4 @@
-package vcucmsc355.fitnessapp;
+package musamahmood.fitnessapp;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -12,42 +12,48 @@ import android.view.ViewParent;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+
 /**
- * Name of test: MainActivityTest_StepCounter
- * Description: This test checks that the UI element for steps taken is present, indicating
- * that the step counter is enabled.
+ * Name of test: MainActivityTest_UserStatisticsButton
+ * Description: This test checks that the button that takes the user to their statistics and data
+ * page works.
  * Result: Pass
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest_StepCounter {
+public class MainActivityTest_UserStatisticsButton {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest_StepCounter() {
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.stepCounterText), withText("Steps Taken:"),
-                        childAtPosition(
-                                allOf(withId(R.id.container),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                3),
-                        isDisplayed()));
+    public void mainActivityTest_UserStatisticsButton() {
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.statisticsButton), withText("User Statistics"), isDisplayed()));
+        appCompatButton.perform(click());
 
-        textView.check(matches(withText("Steps Taken:")));
+        ViewInteraction linearLayout = onView(
+                allOf(withId(R.id.day),
+                        childAtPosition(
+                                allOf(withId(android.R.id.tabcontent),
+                                        childAtPosition(
+                                                IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                                1)),
+                                0),
+                        isDisplayed()));
+        linearLayout.check(matches(isDisplayed()));
 
     }
 

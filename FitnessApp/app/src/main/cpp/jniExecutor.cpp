@@ -77,7 +77,7 @@ static void main_activityClassifier()
 
 extern "C" {
 JNIEXPORT jdoubleArray JNICALL
-Java_vcucmsc355_fitnessapp_MainActivity_jniActivityTrackerInit(JNIEnv *env, jobject jobject1) {
+Java_musamahmood_fitnessapp_MainActivity_jniActivityTrackerInit(JNIEnv *env, jobject jobject1) {
     activityTracker_initialize();
     activityClassifier_initialize();
     main_activityClassifier();
@@ -96,7 +96,7 @@ Java_vcucmsc355_fitnessapp_MainActivity_jniActivityTrackerInit(JNIEnv *env, jobj
 
 extern "C" {
 JNIEXPORT jdoubleArray JNICALL
-Java_vcucmsc355_fitnessapp_MainActivity_jniActivityTracker(JNIEnv *env, jobject jobject1, jdoubleArray data) {
+Java_musamahmood_fitnessapp_MainActivity_jniActivityTracker(JNIEnv *env, jobject jobject1, jdoubleArray data) {
     jdouble  *dataArray = env->GetDoubleArrayElements(data, NULL);
     double Y[5];
     if(dataArray==NULL) LOGE("Array Null Error!");
@@ -109,7 +109,7 @@ Java_vcucmsc355_fitnessapp_MainActivity_jniActivityTracker(JNIEnv *env, jobject 
 
 extern "C" {
 JNIEXPORT jdouble JNICALL
-Java_vcucmsc355_fitnessapp_MainActivity_jniActivityClassifier(JNIEnv *env, jobject jobject1,
+Java_musamahmood_fitnessapp_MainActivity_jniActivityClassifier(JNIEnv *env, jobject jobject1,
                                       jdoubleArray accX, jdoubleArray accY, jdoubleArray accZ,
                                       jdoubleArray gyrX, jdoubleArray gyrY, jdoubleArray gyrZ) {
     jdouble  *accXp = env->GetDoubleArrayElements(accX, NULL);
