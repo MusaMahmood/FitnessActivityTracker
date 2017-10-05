@@ -27,7 +27,6 @@ add_library( # Sets the name of the library.
              # Provides a relative path to your source file(s).
              src/main/cpp/activityClassifier.cpp
              src/main/cpp/jniExecutor.cpp
-             src/main/cpp/activityTracker.cpp
              src/main/cpp/resultant.cpp
              src/main/cpp/rt_nonfinite.cpp
              src/main/cpp/rtGetInf.cpp

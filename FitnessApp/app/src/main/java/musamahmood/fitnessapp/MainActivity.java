@@ -387,8 +387,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         }
         //Test JNI Function Call (Temporary):
-        double[] Y = jniActivityTrackerInit();
-        Log.d(TAG,"Initialize JNI Tracker Result: ["+Arrays.toString(Y)+"]");
+        double Y = jniActivityTrackerInit();
+        Log.d(TAG,"Initialize JNI Tracker Result: ["+String.valueOf(Y)+"]");
         super.onResume();
         if(!mDataAcquisitionEnabled)
             enableSensorTracking();
@@ -623,5 +623,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
      * @return vector 'Y' of length 5 for test call of activityTracker C++ method. It should return
      * all 1s.
      */
-    public native double[] jniActivityTrackerInit();
+    public native double jniActivityTrackerInit();
 }

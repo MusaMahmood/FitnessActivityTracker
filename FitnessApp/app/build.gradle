@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "musamahmood.fitnessapp"
         minSdkVersion 19
@@ -35,9 +35,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support:design:25.3.0'
     compile 'com.android.support:support-vector-drawable:25.3.0'
-    compile 'com.google.android.gms:play-services-fitness:8.4.0'
-    compile 'com.google.android.gms:play-services-location:8.4.0'
-//    compile 'com.google.android.gms:play-services:8.4.0'
     testCompile 'junit:junit:4.12'
 
 }

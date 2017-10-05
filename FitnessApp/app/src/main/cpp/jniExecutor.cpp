@@ -4,7 +4,6 @@
 /*Additional Includes for JNI Android Integration*/
 #include <jni.h>
 #include <android/log.h>
-#include "activityTracker.h"
 #include "activityClassifier.h"
 
 #define  LOG_TAG "activityTracker-cpp"
@@ -14,8 +13,10 @@
 
 // Function Declarations
 static void argInit_50x1_real_T(double result[50]);
+
 static double argInit_real_T();
-static void main_activityClassifier();
+
+static double main_activityClassifier();
 
 // Function Definitions
 
@@ -23,8 +24,7 @@ static void main_activityClassifier();
 // Arguments    : double result[50]
 // Return Type  : void
 //
-static void argInit_50x1_real_T(double result[50])
-{
+static void argInit_50x1_real_T(double result[50]) {
     int idx0;
 
     // Loop over the array to initialize each element.
@@ -39,8 +39,7 @@ static void argInit_50x1_real_T(double result[50])
 // Arguments    : void
 // Return Type  : double
 //
-static double argInit_real_T()
-{
+static double argInit_real_T() {
     return 0.0;
 }
 
@@ -48,8 +47,7 @@ static double argInit_real_T()
 // Arguments    : void
 // Return Type  : void
 //
-static void main_activityClassifier()
-{
+static double main_activityClassifier() {
     double dv8[50];
     double dv9[50];
     double dv10[50];
@@ -73,52 +71,33 @@ static void main_activityClassifier()
     argInit_50x1_real_T(dv12);
     argInit_50x1_real_T(dv13);
     Y = activityClassifier(dv8, dv9, dv10, dv11, dv12, dv13);
-}
-
-extern "C" {
-JNIEXPORT jdoubleArray JNICALL
-Java_musamahmood_fitnessapp_MainActivity_jniActivityTrackerInit(JNIEnv *env, jobject jobject1) {
-    activityTracker_initialize();
-    activityClassifier_initialize();
-    main_activityClassifier();
-    double dataArray[600];
-    for (int i = 0; i < 600; ++i) {
-        dataArray[i] = 0.0;
-    }
-    double Y[5];
-    activityTracker(dataArray, Y);
-    jdoubleArray m_result = env->NewDoubleArray(5);
-    env->SetDoubleArrayRegion(m_result, 0, 5, Y);
-    return m_result;
-}
-}
-
-
-extern "C" {
-JNIEXPORT jdoubleArray JNICALL
-Java_musamahmood_fitnessapp_MainActivity_jniActivityTracker(JNIEnv *env, jobject jobject1, jdoubleArray data) {
-    jdouble  *dataArray = env->GetDoubleArrayElements(data, NULL);
-    double Y[5];
-    if(dataArray==NULL) LOGE("Array Null Error!");
-    activityTracker(dataArray, Y);
-    jdoubleArray m_result = env->NewDoubleArray(5);
-    env->SetDoubleArrayRegion(m_result, 0, 5, Y);
-    return m_result;
-}
+    return Y;
 }
 
 extern "C" {
 JNIEXPORT jdouble JNICALL
+Java_musamahmood_fitnessapp_MainActivity_jniActivityTrackerInit(JNIEnv *env, jobject jobject1) {
+    activityClassifier_initialize();
+    return main_activityClassifier();
+}
+}
+
+
+
+extern "C" {
+JNIEXPORT jdouble JNICALL
 Java_musamahmood_fitnessapp_MainActivity_jniActivityClassifier(JNIEnv *env, jobject jobject1,
-                                      jdoubleArray accX, jdoubleArray accY, jdoubleArray accZ,
-                                      jdoubleArray gyrX, jdoubleArray gyrY, jdoubleArray gyrZ) {
-    jdouble  *accXp = env->GetDoubleArrayElements(accX, NULL);
-    jdouble  *accYp = env->GetDoubleArrayElements(accY, NULL);
-    jdouble  *accZp = env->GetDoubleArrayElements(accZ, NULL);
-    jdouble  *gyrXp = env->GetDoubleArrayElements(gyrX, NULL);
-    jdouble  *gyrYp = env->GetDoubleArrayElements(gyrY, NULL);
-    jdouble  *gyrZp = env->GetDoubleArrayElements(gyrZ, NULL);
-    double Y = activityClassifier(accXp,accYp,accZp,gyrXp,gyrYp,gyrZp);
+                                                               jdoubleArray accX, jdoubleArray accY,
+                                                               jdoubleArray accZ,
+                                                               jdoubleArray gyrX, jdoubleArray gyrY,
+                                                               jdoubleArray gyrZ) {
+    jdouble *accXp = env->GetDoubleArrayElements(accX, NULL);
+    jdouble *accYp = env->GetDoubleArrayElements(accY, NULL);
+    jdouble *accZp = env->GetDoubleArrayElements(accZ, NULL);
+    jdouble *gyrXp = env->GetDoubleArrayElements(gyrX, NULL);
+    jdouble *gyrYp = env->GetDoubleArrayElements(gyrY, NULL);
+    jdouble *gyrZp = env->GetDoubleArrayElements(gyrZ, NULL);
+    double Y = activityClassifier(accXp, accYp, accZp, gyrXp, gyrYp, gyrZp);
     return Y;
 }
 }
